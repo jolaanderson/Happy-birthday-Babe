@@ -30,26 +30,17 @@
         <div id="wrap">
             <div id="text">
                 <div id="code">
-                    <!-- BIRTHDAY TEXT ADDED -->
-                    <span class="say">Hey Jacques! 💞</span><br>
-                    <span class="say">Happy Birthday my love 🎈</span><br>
+                    <span class="say">Hey you 💞</span><br>
+                    <span class="say">Happy Birthday 🎈</span><br>
                     <span class="say">May God bless you 🍀</span><br>
-                    <span class="say">And give u many happiness 💕</span><br><br>
-                    <span class="say">What we have is real soooo</span><br>
-                    <span class="say">If life feels uncertain, if your heart feels tired</span><br>
-                    <span class="say">if the world feels too loud or rocks 🎶</span><br>
-                    <span class="say">(reference to the song lol)</span><br><br>
-                    <span class="say">I will always be here for you</span><br>
-                    <span class="say">ready to hug and hold you</span><br>
-                    <span class="say">I love you so much and I believe in us pookieee ❤️</span><br><br>
+                    <span class="say">And give u many happiness 💕</span><br>
+                    <span class="say">Just saying... you're pretty awesome ❤️</span><br>
                     <span class="say">Sending good vibes and maybe a wink 😏</span><br>
-                    <span class="say">Hope you have a great day today</span><br>
-                    <span class="say">and I worked soooo hard on this lol</span><br>
-                    <span class="say">you better like it ❤️😘</span><br>
+                    <span class="say">Hope u have a great day today ❤️😘</span><br>
                 </div>
             </div>
             <div id="clock-box">
-                <span id="clock">577 days 0 hours 0 minutes 0 seconds</span>
+                <span id="clock">577 days 0 hours 0 minutes 0 seconds</span> <!-- Change to "6940 days..." if needed -->
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
         </div>
@@ -72,7 +63,7 @@
         var opts = {
             seed: {
                 x: width / 2 - 20,
-                color: "rgb(52, 152, 219)", // PINK -> BLUE
+                color: "rgb(190, 26, 37)",
                 scale: 2
             },
             branch: [
@@ -93,8 +84,16 @@
                     ]]
                 ]] 
             ],
-            bloom: { num: 700, width: 1080, height: 650 },
-            footer: { width: 1200, height: 5, speed: 10 }
+            bloom: {
+                num: 700,
+                width: 1080,
+                height: 650,
+            },
+            footer: {
+                width: 1200,
+                height: 5,
+                speed: 10,
+            }
         }
 
         var tree = new Tree(canvas[0], width, height, opts);
@@ -137,11 +136,17 @@
         }));
 
         var growAnimate = eval(Jscex.compile("async", function () {
-            do { tree.grow(); $await(Jscex.Async.sleep(10)); } while (tree.canGrow());
+            do {
+                tree.grow();
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canGrow());
         }));
 
         var flowAnimate = eval(Jscex.compile("async", function () {
-            do { tree.flower(2); $await(Jscex.Async.sleep(10)); } while (tree.canFlower());
+            do {
+                tree.flower(2);
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canFlower());
         }));
 
         var moveAnimate = eval(Jscex.compile("async", function () {
@@ -152,6 +157,7 @@
             }
             foot.draw();
             tree.snapshot("p2", 500, 0, 610, 680);
+
             canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
             canvas.css("background", "#ffe");
             $await(Jscex.Async.sleep(300));
