@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Birthday King 💙</title>
+<style>
+    body {
+        background-color: #fff0f5;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    #wrap {
+        max-width: 800px;
+        margin: 20px auto;
+    }
+    #photo-box img {
+        max-width: 300px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    #photo-box p {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #2c7be5;
+    }
+    #code {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #2c7be5;
+        line-height: 1.5;
+        display: none; /* will show with typewriter effect */
+    }
+    canvas {
+        display: block;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+        background-color: #ffe;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div id="wrap">
+
+    <!-- IMAGE PLACEHOLDER -->
+    <div id="photo-box">
+        <img src="https://via.placeholder.com/300x200" alt="Special memory">
+        <p>Just a little memory I love 💕</p>
+    </div>
+
+    <!-- BIRTHDAY TEXT -->
+    <div id="code">
+        <span>Hey Jacques! 💞</span><br>
+        <span>Happy Birthday my love 🎈</span><br>
+        <span>May God bless you 🍀</span><br>
+        <span>And give u many happiness 💕</span><br><br>
+        <span>What we have is real soooo</span><br>
+        <span>If life feels uncertain, if your heart feels tired</span><br>
+        <span>if the world feels too loud or rocks 🎶</span><br>
+        <span>(reference to the song lol)</span><br><br>
+        <span>I will always be here for you</span><br>
+        <span>ready to hug and hold you</span><br>
+        <span>I love you so much and I believe in us pookieee ❤️</span><br><br>
+        <span>Sending good vibes and maybe a wink 😏</span><br>
+        <span>Hope you have a great day today</span><br>
+        <span>and I worked soooo hard on this lol</span><br>
+        <span>you better like it ❤️😘</span><br>
+    </div>
+
+    <!-- CANVAS HEART/TREE -->
+    <canvas id="canvas" width="800" height="500"></canvas>
+
+</div>
+
+<script>
+// ==========================
+// Simple animated hearts/tree
+// ==========================
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const hearts = [];
+
+// Heart particle
+class Heart {
+    constructor(x, y, size, speed) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speed = speed;
+        this.alpha = 1;
+    }
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = '#2c7be5';
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.bezierCurveTo(this.x - 10, this.y - 10, this.x - 25, this.y + 10, this.x, this.y + 25);
+        ctx.bezierCurveTo(this.x + 25, this.y + 10, this.x + 10, this.y - 10, this.x, this.y);
+        ctx.fill();
+        ctx.restore();
+    }
+    update() {
+        this.y -= this.speed;
+        this.alpha -= 0.01;
+        if (this.alpha < 0) this.alpha = 0;
+    }
+}
+
+// Animate hearts
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hearts.forEach((h, i) => {
+        h.update();
+        h.draw();
+        if (h.alpha <= 0) hearts.splice(i, 1);
+    });
+    requestAnimationFrame(animate);
+}
+
+// Add hearts on click
+canvas.addEventListener('click', () => {
+    for (let i=0; i<5; i++) {
+        hearts.push(new Heart(400 + Math.random()*100-50, 400 + Math.random()*50-25, 10, Math.random()*2+1));
+    }
+    // Show birthday text
+    document.getElementById('code').style.display = 'block';
+});
+
+// Start animation
+animate();
+
+// ==========================
+// Typewriter effect for #code
+// ==========================
+const codeEl = document.getElementById('code');
+const spans = codeEl.querySelectorAll('span');
+spans.forEach(span => span.style.opacity = 0);
+
+let idx = 0;
+function typeWriter() {
+    if (idx < spans.length) {
+        spans[idx].style.opacity = 1;
+        idx++;
+        setTimeout(typeWriter, 500);
+    }
+}
+canvas.addEventListener('click', typeWriter, {once:true});
+
+</script>
+
+</body>
+</html>
